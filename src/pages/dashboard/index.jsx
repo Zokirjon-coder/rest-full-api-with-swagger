@@ -79,7 +79,6 @@ const MainPage = () => {
 
   const onChangeInp = (change)=>{
     setEdit({...edit, ...change})
-    console.log(edit);
   }
 
   const code = useRef(null);
@@ -88,7 +87,6 @@ const MainPage = () => {
 
   const onSubmit = () => {
     link.post("/Bank/Update", edit)
-    .then((res)=>console.log(res, edit))
     .catch((err) => console.log(err));
     
     setEdit({Code: '', Bankname: '', Stateid: ''})

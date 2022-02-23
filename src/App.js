@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+import Login from "./pages/login";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthProviderAPI } from "./context/Auth";
+import Dashboart from "./pages/dashboard";
 
 function App() {
+  const {auth} = useContext(AuthProviderAPI);
+  if (!auth)
+    return (
+      <div className="App">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path='/' element={<Navigate to={'/login'} />} />
+          <Route path='*' element={<Navigate to={'/login'} />} />
+        </Routes>
+      </div>
+    );
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboart />} />
+        <Route path='*' element={<h1>Page not Found</h1>} />
+      </Routes>
     </div>
   );
 }

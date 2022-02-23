@@ -1,0 +1,22 @@
+.containerTable{
+    padding: 15px 20px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.antd.ant-input{
+    width: unset!important;
+}
+
+h4{
+    text-align: right;
+}
+
+.ant-col.ant-form-item-label{
+    width: 80px!important;
+}

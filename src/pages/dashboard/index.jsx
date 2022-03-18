@@ -19,22 +19,22 @@ const MainPage = () => {
   const { token, setAuth, setToken } = useContext(AuthProviderAPI);
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
-  const [edit, setEdit] = useState({ ID: data.total, Code:'', Bankname: '', Stateid:'' });
-  
+  const [edit, setEdit] = useState({ ID: data.total, Code: '', Bankname: '', Stateid: '' });
+
   const showDrawer = () => {
     setVisible(true);
-    setEdit({...edit, ID: data.total})
+    setEdit({ ...edit, ID: data.total })
   };
-  
+
   const onChange = (e) => {
     setPlacement(e.target.value);
   };
-  
+
   const onClose = () => {
     setVisible(false);
-    setEdit({ID: '', Code: '', Bankname: '', Stateid:'0'})
+    setEdit({ ID: '', Code: '', Bankname: '', Stateid: '0' })
   };
-  
+
   const onLogOut = () => {
     if (window.confirm("tark etmoqchimisiz")) {
       setToken(null);
@@ -43,7 +43,7 @@ const MainPage = () => {
       localStorage.removeItem("token");
     }
   };
-  
+
   const link = axios.create({
     baseURL: "http://templ-api.webase.uz",
     headers: {
@@ -53,15 +53,15 @@ const MainPage = () => {
   });
   const dataUpload = () => {
     link
-    .get(`/Bank/GetList?PageNumber=${1}&PageLimit=${801}`)
-    .then((res) => {
-      setData(res.data);
-      setEdit({ ...edit, ID: ++res.data.total });
-    })
-    .catch((err) => console.log(err));
+      .get(`/Bank/GetList?PageNumber=${1}&PageLimit=${801}`)
+      .then((res) => {
+        setData(res.data);
+        setEdit({ ...edit, ID: ++res.data.total });
+      })
+      .catch((err) => console.log(err));
   };
   useEffect(() => dataUpload(), []);
-  
+
   const onDelete = (id) => {
     if (window.confirm("siz ushbu malumotni o'chirmoqchimisiz")) {
       link.delete(`/Bank/Delete?id=${id}`);
@@ -77,8 +77,8 @@ const MainPage = () => {
       .then((res) => setData(res.data));
   };
 
-  const onChangeInp = (change)=>{
-    setEdit({...edit, ...change})
+  const onChangeInp = (change) => {
+    setEdit({ ...edit, ...change })
   }
 
   const code = useRef(null);
@@ -87,9 +87,9 @@ const MainPage = () => {
 
   const onSubmit = () => {
     link.post("/Bank/Update", edit)
-    .catch((err) => console.log(err));
-    
-    setEdit({Code: '', Bankname: '', Stateid: ''})
+      .catch((err) => console.log(err));
+
+    setEdit({ Code: '', Bankname: '', Stateid: '' })
     onClose();
     dataUpload();
   };
@@ -97,11 +97,11 @@ const MainPage = () => {
   const onEdit = (id) => {
     showDrawer();
     link
-    .get(`Bank/Get?id=${id}`)
-    .then((res) => res.data)
-    .then((item) => {
-      setEdit(item)
-    });
+      .get(`Bank/Get?id=${id}`)
+      .then((res) => res.data)
+      .then((item) => {
+        setEdit(item)
+      });
   };
 
   const columns = [
@@ -162,13 +162,13 @@ const MainPage = () => {
         >
           <Form>
             <Form.Item label="Code">
-              <Input ref={code} value={edit['Code']} onChange={(e)=>onChangeInp({'Code': e.target.value??''})} placeholder="Code" />
+              <Input ref={code} value={edit['Code']} onChange={(e) => onChangeInp({ 'Code': e.target.value ?? '' })} placeholder="Code" />
             </Form.Item>
             <Form.Item label="Bank name">
-              <Input ref={bankName} value={edit['Bankname']} onChange={(e)=>onChangeInp({'Bankname': e.target.value??''})} placeholder="Bank name" />
+              <Input ref={bankName} value={edit['Bankname']} onChange={(e) => onChangeInp({ 'Bankname': e.target.value ?? '' })} placeholder="Bank name" />
             </Form.Item>
             <Form.Item label="Stateid">
-              <InputNumber ref={stateid} e={edit['Stateid']} onChange={(e)=>onChangeInp({'Stateid': e??''})} min={0} max={1} defaultValue={0} />
+              <InputNumber ref={stateid} e={edit['Stateid']} onChange={(e) => onChangeInp({ 'Stateid': e ?? '' })} min={0} max={1} defaultValue={0} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" onClick={onSubmit}>
